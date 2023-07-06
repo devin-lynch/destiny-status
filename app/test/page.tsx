@@ -1,3 +1,5 @@
+import Keyval from '../_components/Keyval';
+
 export default function Test() {
   const apiCall = async () => {
     try {
@@ -12,7 +14,6 @@ export default function Test() {
         }
       );
       const data = await response.json();
-      console.log(data);
       return data.Response.version;
     } catch (err) {
       console.warn(err);
@@ -22,9 +23,10 @@ export default function Test() {
   const apiData = apiCall();
 
   return (
-    <div>
+    <div className="mx-auto text-center">
       <p>Hello world</p>
       <p>{apiData}</p>
+      <Keyval />
     </div>
   );
 }
