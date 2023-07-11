@@ -1,4 +1,4 @@
-import Milestones from './Milestones';
+import Milestone from './Milestone';
 
 export default async function FetchMilestones() {
   const fetchMilestones = async () => {
@@ -25,7 +25,7 @@ export default async function FetchMilestones() {
   const hashComponents = hashArray.map((hash, i) => {
     return (
       <li key={i}>
-        <Milestones hash={hash} />
+        <Milestone hash={hash} />
       </li>
     );
   });
