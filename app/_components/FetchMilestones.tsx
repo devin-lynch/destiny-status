@@ -20,7 +20,7 @@ export default async function FetchMilestones() {
 
   const hashArray = Object.keys(hashData);
 
-  console.log(hashArray);
+  // console.log(hashArray);
 
   const hashComponents = hashArray.map((hash, i) => {
     return (

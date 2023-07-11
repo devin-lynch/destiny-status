@@ -7,21 +7,15 @@ export default function Milestones({ hash }) {
   const [milestones, setMilestones] = useState();
   const getManifestMilestones = async () => {
     const milestones = await get('manifest');
-    setMilestones(milestones);
-    // console.log(milestones);
     return milestones;
   };
 
   useEffect(() => {
-    getManifestMilestones();
-    // fetchMilestones();
+    (async () => {
+      const milestones = await getManifestMilestones();
+      setMilestones(milestones);
+    })();
   }, []);
-
-  useEffect(() => {
-    if (milestones) {
-      console.log(milestones[67076417].displayProperties);
-    }
-  }, [milestones]);
 
   const loadedContent = milestones ? (
     <div>
