@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { get, set } from 'idb-keyval';
 
-export default function Milestones({ hash }) {
+export default function Milestone({ hash }) {
   const [milestones, setMilestones] = useState();
   const getManifestMilestones = async () => {
     const milestones = await get('manifest');
