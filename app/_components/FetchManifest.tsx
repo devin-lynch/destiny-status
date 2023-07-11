@@ -27,7 +27,7 @@ export default function FetchManifest() {
     const data = await response.json();
     console.log(data);
     // currently only saving one table from the manifest in local store as a proof of concept -- full manifest is larger than firefox will accept (works in Chrome apparently).  looks like DIM only stores the tables that are needed for app functionality, so I'll need to figure out a way to only save the chunks of the manifest that will actually be useful
-    set('manifest', data.DestinyActivityDefinition);
+    set('manifest', data.DestinyMilestoneDefinition);
   };
 
   // initial API request to add relevant metadata to state
