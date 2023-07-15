@@ -1,6 +1,16 @@
 'use client';
 
-export default function Milestone({ milestoneDefinition }) {
+type Props = {
+  milestoneDefinition: {
+    displayProperties: {
+      name: string;
+      description: string;
+      icon: string;
+    };
+  };
+};
+
+export default function Milestone({ milestoneDefinition }: Props) {
   return (
     <div>
       <p>Milestone: {milestoneDefinition.displayProperties.name}</p>

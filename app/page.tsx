@@ -1,7 +1,6 @@
 import Milestones from './_components/Milestones';
 
 export default async function Home() {
-
   const fetchMilestones = async () => {
     const response = await fetch(
       'https://www.bungie.net/Platform/Destiny2/Milestones/',
@@ -19,12 +18,16 @@ export default async function Home() {
 
   const apiMilestoneResponse = await fetchMilestones();
 
-  const currentMilestoneHashes = Object.keys(apiMilestoneResponse);
+  const currentMilestoneHashes = Object.keys(apiMilestoneResponse).map(
+    (key) => {
+      return parseInt(key);
+    }
+  );
 
   return (
     <main className="flex min-h-screen flex-col items-center pt-24">
       <p>hi 👋</p>
-      <Milestones hashes={currentMilestoneHashes}/>
+      <Milestones hashes={currentMilestoneHashes} />
     </main>
   );
 }

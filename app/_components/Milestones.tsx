@@ -4,9 +4,26 @@ import { useState, useEffect } from 'react';
 import { get } from 'idb-keyval';
 import Milestone from './Milestone';
 
-export default function Milestones({ hashes }) {
-  const [milestoneDefinitions, setMilestoneDefinitions] = useState();
-  const [milestoneComponents, setMilestoneComponents] = useState([]);
+type Props = {
+  hashes: number[];
+};
+
+type MilestoneDefinitions = {
+  [key: number]: {
+    displayProperties: {
+      name: string;
+      description: string;
+      icon: string;
+    };
+  };
+};
+
+export default function Milestones({ hashes }: Props) {
+  const [milestoneDefinitions, setMilestoneDefinitions] =
+    useState<MilestoneDefinitions>();
+  const [milestoneComponents, setMilestoneComponents] = useState<JSX.Element[]>(
+    []
+  );
   const manifestIsLoaded = useManifestStatus();
 
   const getMilestoneDefinitions = async () => {
@@ -22,17 +39,15 @@ export default function Milestones({ hashes }) {
   }, []);
 
   useEffect(() => {
-    if (manifestIsLoaded) {
-      const milestoneComponents: JSX.Element[] = hashes.map(
-        (hash, i: number) => {
-          return (
-            <li key={i}>
-              <p>hi</p>
-              <Milestone milestoneDefinition={milestoneDefinitions[hash]} />
-            </li>
-          );
-        }
-      );
+    if (milestoneDefinitions) {
+      const milestoneComponents: JSX.Element[] = hashes.map((hash, i) => {
+        return (
+          <li key={i}>
+            <p>hi</p>
+            <Milestone milestoneDefinition={milestoneDefinitions[hash]} />
+          </li>
+        );
+      });
       setMilestoneComponents(milestoneComponents);
     }
   }, [milestoneDefinitions]);
