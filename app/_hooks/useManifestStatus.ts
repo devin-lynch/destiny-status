@@ -2,9 +2,10 @@
 import { useState, useEffect } from 'react';
 import { get, set } from 'idb-keyval';
 
-export default function FetchManifest() {
+export function useManifestStatus() {
   const [fetchedVersionNumber, setFetchedVersionNumber] = useState('');
   const [manifestPath, setManifestPath] = useState('');
+  const [manifestLoaded, setManifestLoaded] = useState(false);
 
   // get the most recent manifest version and the location to download it
   const fetchManifestData = async () => {
@@ -25,7 +26,6 @@ export default function FetchManifest() {
   const fetchManifest = async () => {
     const response = await fetch(`https://www.bungie.net${manifestPath}`);
     const data = await response.json();
-    console.log(data);
     // currently only saving one table from the manifest in local store as a proof of concept -- full manifest is larger than firefox will accept (works in Chrome apparently).  looks like DIM only stores the tables that are needed for app functionality, so I'll need to figure out a way to only save the chunks of the manifest that will actually be useful
     set('manifest', data.DestinyMilestoneDefinition);
   };
@@ -47,20 +47,20 @@ export default function FetchManifest() {
           fetchedVersionNumber
         );
         if (manifestVersionsMatch) {
-          console.log("it's a match");
-          await fetchManifest();
+          console.log('stored manifest matches current version');
+          setManifestLoaded(true);
         } else {
-          console.log('no match, fixing that');
+          console.log(
+            'stored manifest does not match current version -- downloading new manifest'
+          );
+          // need to add error handling here to ensure that cacheManifestVersion doesn't get updated first and then immediately after fetchManifest() fails somehow.  Would lead to subsequent loads incorrectly thinking the newest manifest is present
           set('cacheManifestVersion', fetchedVersionNumber);
           await fetchManifest();
+          setManifestLoaded(true);
         }
       })();
     }
   }, [manifestPath]);
 
-  return (
-    <>
-      <p>hi from FetchManfest component</p>
-    </>
-  );
+  return manifestLoaded;
 }
