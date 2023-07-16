@@ -32,11 +32,12 @@ export default function Milestones({ hashes }: Props) {
   };
 
   useEffect(() => {
+    if (!manifestIsLoaded) return
     (async () => {
       const milestoneDefinitions = await getMilestoneDefinitions();
       setMilestoneDefinitions(milestoneDefinitions);
     })();
-  }, []);
+  }, [manifestIsLoaded]);
 
   useEffect(() => {
     if (milestoneDefinitions) {
