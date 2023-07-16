@@ -56,7 +56,6 @@ export function useManifestStatus() {
         console.log(
             'stored manifest does not match current version -- downloading new manifest'
         );
-        // need to add error handling here to ensure that cacheManifestVersion doesn't get updated first and then immediately after fetchManifest() fails somehow.  Would lead to subsequent loads incorrectly thinking the newest manifest is present
         try {
           await fetchManifest();
           set("cacheManifestVersion", fetchedVersionNumber);
