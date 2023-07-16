@@ -1,35 +1,27 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { get, set } from 'idb-keyval';
-
-export default function Milestone({ hash }) {
-  const [milestones, setMilestones] = useState();
-  const getManifestMilestones = async () => {
-    const milestones = await get('manifest');
-    return milestones;
+type Props = {
+  milestoneDefinition: {
+    displayProperties: {
+      name: string;
+      description: string;
+      icon: string;
+    };
   };
+};
 
-  useEffect(() => {
-    (async () => {
-      const milestones = await getManifestMilestones();
-      setMilestones(milestones);
-    })();
-  }, []);
-
-  const loadedContent = milestones ? (
+export default function Milestone({ milestoneDefinition }: Props) {
+  return (
     <div>
-      <p>Milestone: {milestones[hash].displayProperties.name}</p>
+      <p>Milestone: {milestoneDefinition.displayProperties.name}</p>
       <p>
         Milestone description:
-        {milestones[hash].displayProperties.description}
+        {milestoneDefinition.displayProperties.description}
       </p>
       <img
-        src={`https://www.bungie.net${milestones[hash].displayProperties.icon}`}
+        src={`https://www.bungie.net${milestoneDefinition.displayProperties.icon}`}
         alt=""
       />
     </div>
-  ) : null;
-
-  return <div>{milestones ? loadedContent : 'loading...'}</div>;
+  );
 }
