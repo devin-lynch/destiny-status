@@ -26,13 +26,15 @@ export default function Milestones({ hashes }: Props) {
   );
   const manifestIsLoaded = useManifestStatus();
 
+  // console.log(milestoneDefinitions);
+
   const getMilestoneDefinitions = async () => {
     const manifest = await get('manifest');
     return manifest.DestinyMilestoneDefinition;
   };
 
   useEffect(() => {
-    if (!manifestIsLoaded) return
+    if (!manifestIsLoaded) return;
     (async () => {
       const milestoneDefinitions = await getMilestoneDefinitions();
       setMilestoneDefinitions(milestoneDefinitions);
