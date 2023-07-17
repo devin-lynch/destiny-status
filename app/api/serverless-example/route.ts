@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-export async function GET(request: NextRequest) {
-  const fetchMilestones = async () => {
+export async function POST(request: NextRequest) {
+  const fetchUsersByUsernamePrefix = async () => {
+    const body = await request.json();
+    const { username } = body;
     const response = await fetch(
       "https://www.bungie.net/platform/User/Search/GlobalName/0/",
       {
@@ -12,7 +14,7 @@ export async function GET(request: NextRequest) {
           "X-API-Key": `${process.env.REACT_APP_DESTINY_API_KEY}`,
         },
         body: JSON.stringify({
-          displayNamePrefix: "Datto",
+          displayNamePrefix: username,
         }),
       }
     );
@@ -20,17 +22,7 @@ export async function GET(request: NextRequest) {
     return data.Response;
   };
 
-  const apiMilestoneResponse = await fetchMilestones();
+  const foundUsers = await fetchUsersByUsernamePrefix();
 
-  return NextResponse.json(
-    {
-      body: apiMilestoneResponse,
-      path: request.nextUrl.pathname,
-      query: request.nextUrl.search,
-      cookies: request.cookies.getAll(),
-    },
-    {
-      status: 200,
-    }
-  );
+  return NextResponse.json(foundUsers);
 }
