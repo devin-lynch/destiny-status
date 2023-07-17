@@ -1,8 +1,8 @@
-'use client';
-import { useManifestStatus } from '../_hooks/useManifestStatus';
-import { useState, useEffect } from 'react';
-import { get } from 'idb-keyval';
-import Milestone from './Milestone';
+"use client";
+import { useManifestStatus } from "../_hooks/useManifestStatus";
+import { useState, useEffect } from "react";
+import { get } from "idb-keyval";
+import Milestone from "./Milestone";
 
 type Props = {
   hashes: number[];
@@ -27,12 +27,12 @@ export default function Milestones({ hashes }: Props) {
   const manifestIsLoaded = useManifestStatus();
 
   const getMilestoneDefinitions = async () => {
-    const manifest = await get('manifest');
+    const manifest = await get("manifest");
     return manifest.DestinyMilestoneDefinition;
   };
 
   useEffect(() => {
-    if (!manifestIsLoaded) return
+    if (!manifestIsLoaded) return;
     (async () => {
       const milestoneDefinitions = await getMilestoneDefinitions();
       setMilestoneDefinitions(milestoneDefinitions);
@@ -44,7 +44,6 @@ export default function Milestones({ hashes }: Props) {
       const milestoneComponents: JSX.Element[] = hashes.map((hash, i) => {
         return (
           <li key={i}>
-            <p>hi</p>
             <Milestone milestoneDefinition={milestoneDefinitions[hash]} />
           </li>
         );
