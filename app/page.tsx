@@ -1,5 +1,5 @@
 import Milestones from './_components/Milestones';
-import Character from './_components/Character';
+import CharacterContainer from './_components/CharacterContainer';
 
 export default async function Home() {
   const fetchMilestones = async () => {
@@ -45,7 +45,7 @@ export default async function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center pt-24">
       <p>hi 👋</p>
-      <Character characterData={characterData} />
+      <CharacterContainer characterData={characterData} />
       <Milestones hashes={currentMilestoneHashes} />
     </main>
   );

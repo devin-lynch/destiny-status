@@ -14,6 +14,7 @@ export default function Item({ item }: Props) {
   return (
     <main>
       <div className="text-center mt-8">
+        <p className="text-xl"></p>
         <p className="text-xl">{item.displayProperties.name}</p>
         <div className="flex justify-center">
           <img

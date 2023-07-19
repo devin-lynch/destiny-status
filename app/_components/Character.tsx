@@ -1,4 +1,5 @@
 'use client';
+
 import { useManifestStatus } from '../_hooks/useManifestStatus';
 import { useState, useEffect } from 'react';
 import { get } from 'idb-keyval';
@@ -13,15 +14,11 @@ type Props = {
   };
 };
 
-export default function Character({ characterData }: Props) {
+export default function Character({ characterData, itemHash }: Props) {
   const [itemDefinitions, setItemDefinitions] = useState();
   const [itemComponents, setItemComponents] = useState<JSX.Element[]>();
   const manifestIsLoaded = useManifestStatus();
 
-  // defines the items of the first character of the user
-  const firstCharacterData = characterData['2305843009300009399'].items;
-
-  // defines the manifest table we want
   const getItemDefinitions = async () => {
     const manifest = await get('manifest');
     return manifest.DestinyItemInventoryDefinition;
@@ -36,27 +33,19 @@ export default function Character({ characterData }: Props) {
     })();
   }, [manifestIsLoaded]);
 
-  // creates individual item components referencing the manifest for definitions
   useEffect(() => {
     if (itemDefinitions) {
-      const itemComponents: JSX.Element[] = firstCharacterData.map(
-        (item, i: number) => {
-          const itemHash = item.itemHash;
-          return (
-            <li key={i} style={{ listStyle: 'none' }}>
-              <Item item={itemDefinitions[itemHash]} />
-            </li>
-          );
-        }
-      );
+      const itemComponents = itemHash.map((item, i) => {
+        return (
+          <li key={i}>
+            <Item item={itemDefinitions[item]} />
+          </li>
+        );
+      });
       setItemComponents(itemComponents);
     }
   }, [itemDefinitions]);
 
-  return (
-    <main>
-      <div>Character</div>
-      {itemComponents}
-    </main>
-  );
+  // console.log(itemHash);
+  return <main>{itemComponents}</main>;
 }
