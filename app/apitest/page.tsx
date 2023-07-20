@@ -56,6 +56,12 @@ export default function apitest() {
     setSearchResultComponents([...searchResultComponents]);
   }, [searchResults]);
 
+  const searchResultsContainer = (
+    <div className="bg-slate-900 border border-slate-500 w-60">
+      {searchResultComponents}
+    </div>
+  );
+
   return (
     <div className="flex flex-col items-center mt-2 gap-1">
       <input
@@ -64,10 +70,8 @@ export default function apitest() {
         className="bg-slate-900 border border-slate-500 w-60"
         onChange={(e) => setUsername(e.target.value)}
       />
-      <div className="bg-slate-900 border border-slate-500 w-60">
-        <p>results container</p>
-        {searchResultComponents}
-      </div>
+      {/* need to rewrite this to show the user some kind of difference between an empty input and an input that returned no results from Bungie */}
+      {searchResultComponents.length ? searchResultsContainer : null}
     </div>
   );
 }
