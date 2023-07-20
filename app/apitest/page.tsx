@@ -1,20 +1,26 @@
-"use client";
-import { useState, useEffect } from "react";
+'use client';
+import { useState, useEffect } from 'react';
+
+type SearchResult = {
+  bungieGlobalDisplayName: string;
+};
 
 export default function apitest() {
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState('');
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
 
   useEffect(() => {
     const fetchUsers = setTimeout(async () => {
       try {
         const response = await fetch(
-          "http://localhost:3000/api/serverless-example",
+          'http://localhost:3000/api/serverless-example',
           {
-            method: "POST",
+            method: 'POST',
             body: JSON.stringify({ username }),
           }
         );
         const data = await response.json();
+        setSearchResults([...data.searchResults]);
         console.log(data);
       } catch (error) {
         console.log(error);
@@ -22,6 +28,13 @@ export default function apitest() {
     }, 300);
     return () => clearTimeout(fetchUsers);
   }, [username]);
+
+  useEffect(() => {
+    if (searchResults.length === 0) {
+      return;
+    }
+    console.log('search results populated');
+  }, [searchResults]);
 
   return (
     <div className="flex justify-center mt-2">
