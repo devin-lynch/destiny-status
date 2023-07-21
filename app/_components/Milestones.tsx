@@ -26,6 +26,8 @@ export default function Milestones({ hashes }: Props) {
   );
   const manifestIsLoaded = useManifestStatus();
 
+  // console.log(milestoneDefinitions);
+
   const getMilestoneDefinitions = async () => {
     const manifest = await get("manifest");
     return manifest.DestinyMilestoneDefinition;
