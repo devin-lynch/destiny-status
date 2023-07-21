@@ -62,7 +62,7 @@ export default function apitest() {
   };
 
   const searchResultsContainer = (
-    <div className="bg-slate-900 border border-slate-500 w-60">
+    <div className="max-h-60 w-60 overflow-auto bg-slate-900 border border-slate-500">
       {searchResultComponents}
     </div>
   );
