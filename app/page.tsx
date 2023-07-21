@@ -1,6 +1,10 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import CharacterContainer from './_components/CharacterContainer';
 
-export default async function Home() {
+export default function Home() {
+  const [characterData, setCharacterData] = useState();
   const fetchCharacters = async () => {
     const response = await fetch(
       'http://localhost:3000/api/get-bungie-profile',
@@ -20,12 +24,25 @@ export default async function Home() {
     return data.characterEquipment.data;
   };
 
-  const characterData = await fetchCharacters();
+  useEffect(() => {
+    if (!characterData) {
+      (async () => {
+        try {
+          const characterData = await fetchCharacters();
+          setCharacterData(characterData);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    }
+  }, []);
 
   return (
     <main className="flex min-h-screen flex-col items-center pt-24">
       <p>hi 👋</p>
-      <CharacterContainer characterData={characterData} />
+      {characterData ? (
+        <CharacterContainer characterData={characterData} />
+      ) : null}
     </main>
   );
 }
