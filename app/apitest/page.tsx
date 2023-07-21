@@ -29,7 +29,7 @@ export default function apitest() {
           }
         );
         const data = await response.json();
-        setSearchResults([...data.searchResults]);
+        setSearchResults(data.searchResults);
         console.log(data);
       } catch (error) {
         console.log(error);
@@ -54,7 +54,7 @@ export default function apitest() {
         />
       );
     });
-    setSearchResultComponents([...searchResultComponents]);
+    setSearchResultComponents(searchResultComponents);
   }, [searchResults]);
 
   const handleUserClick = () => {
