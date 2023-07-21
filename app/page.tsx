@@ -27,17 +27,21 @@ export default async function Home() {
 
   const fetchCharacters = async () => {
     const response = await fetch(
-      'https://www.bungie.net/platform/Destiny2/3/Profile/4611686018467284386/?components=205',
+      'http://localhost:3000/api/get-bungie-profile',
       {
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'X-API-Key': `${process.env.REACT_APP_DESTINY_API_KEY}`,
         },
+        body: JSON.stringify({
+          membershipType: '3',
+          membershipId: '4611686018467284386',
+        }),
       }
     );
     const data = await response.json();
-    return data.Response.characterEquipment.data;
+    return data.characterEquipment.data;
   };
 
   const characterData = await fetchCharacters();
