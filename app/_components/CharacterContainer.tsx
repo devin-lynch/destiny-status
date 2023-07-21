@@ -19,7 +19,7 @@ export default function CharacterContainer({ characterData }: Props) {
     });
 
     return (
-      <li key={i} style={{ listStyle: 'none' }}>
+      <li key={i} style={{ listStyle: 'none', border: '1px solid purple' }}>
         {/* need to add dynamic character names */}
         <p>CHARACTER</p>
         <Character
