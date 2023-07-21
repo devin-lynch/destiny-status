@@ -49,12 +49,17 @@ export default function apitest() {
         <SearchComponent
           displayName={searchResult.bungieGlobalDisplayName}
           displayNameCode={searchResult.bungieGlobalDisplayNameCode.toString()}
+          handleUserClick={handleUserClick}
           key={`search result ${i}`}
         />
       );
     });
     setSearchResultComponents([...searchResultComponents]);
   }, [searchResults]);
+
+  const handleUserClick = () => {
+    console.log('hi');
+  };
 
   const searchResultsContainer = (
     <div className="bg-slate-900 border border-slate-500 w-60">
