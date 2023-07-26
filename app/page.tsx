@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import CharacterContainer from './_components/CharacterContainer';
 import SearchComponent from './_components/SearchResult';
+import { get } from 'idb-keyval';
+import { useManifestStatus } from './_hooks/useManifestStatus';
 
 type SearchResult = {
   bungieGlobalDisplayName: string;
@@ -16,6 +18,22 @@ export default function Home() {
     JSX.Element[]
   >([]);
   const [characterData, setCharacterData] = useState();
+  const [itemDefinitions, setItemDefinitions] = useState();
+  const manifestIsLoaded = useManifestStatus();
+
+  const getItemDefinitions = async () => {
+    const manifest = await get('manifest');
+    return manifest.DestinyItemInventoryDefinition;
+  };
+
+  // sets the manifest table as our state
+  useEffect(() => {
+    if (!manifestIsLoaded) return;
+    (async () => {
+      const itemDefinitions = await getItemDefinitions();
+      setItemDefinitions(itemDefinitions);
+    })();
+  }, [manifestIsLoaded]);
 
   useEffect(() => {
     const fetchUsers = setTimeout(async () => {
@@ -114,8 +132,11 @@ export default function Home() {
         {/* need to rewrite this to show the user some kind of difference between an empty input and an input that returned no results from Bungie */}
         {searchResultComponents.length ? searchResultsContainer : null}
       </div>
-      {characterData ? (
-        <CharacterContainer characterData={characterData} />
+      {characterData && itemDefinitions ? (
+        <CharacterContainer
+          characterData={characterData}
+          itemDefinitions={itemDefinitions}
+        />
       ) : null}
     </main>
   );
