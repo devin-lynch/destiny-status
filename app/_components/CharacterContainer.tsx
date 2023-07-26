@@ -27,15 +27,11 @@ export default function CharacterContainer({
     return (
       <li key={i} style={{ listStyle: 'none', border: '1px solid purple' }}>
         {/* need to add dynamic character names */}
-        <p>CHARACTER</p>
+        <p className="text-center">CHARACTER</p>
         <Character itemDefinitions={itemDefinitions} itemHash={itemHash} />
       </li>
     );
   });
 
-  return (
-    <main className="text-center w-1/2">
-      <div className="flex">{characters}</div>
-    </main>
-  );
+  return <div className="flex">{characters}</div>;
 }

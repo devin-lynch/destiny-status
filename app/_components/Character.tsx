@@ -32,5 +32,5 @@ export default function Character({ itemDefinitions, itemHash }: Props) {
     }
   }, [itemDefinitions]);
 
-  return <main>{itemComponents}</main>;
+  return <div className="w-60">{itemComponents}</div>;
 }
