@@ -13,15 +13,15 @@ type Props = {
       itemTypeAndTierDisplayName: string;
     };
   };
-  itemHash: number[];
+  itemHashes: number[];
 };
 
-export default function Character({ itemDefinitions, itemHash }: Props) {
+export default function Character({ itemDefinitions, itemHashes }: Props) {
   const [itemComponents, setItemComponents] = useState<JSX.Element[]>();
 
   useEffect(() => {
     if (itemDefinitions) {
-      const itemComponents = itemHash.map((item, i) => {
+      const itemComponents = itemHashes.map((item, i) => {
         return (
           <div key={i}>
             <Item item={itemDefinitions[item]} />
@@ -30,7 +30,7 @@ export default function Character({ itemDefinitions, itemHash }: Props) {
       });
       setItemComponents(itemComponents);
     }
-  }, [itemDefinitions, itemHash]);
+  }, [itemDefinitions, itemHashes]);
 
   return <div className="w-60">{itemComponents}</div>;
 }
