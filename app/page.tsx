@@ -134,24 +134,33 @@ export default function Home() {
     </div>
   );
 
+  const loadedView = (
+    <>
+      <div className="flex flex-col items-center mt-2 gap-1">
+        <input
+          value={username}
+          placeholder="search by Bungie name..."
+          className="bg-slate-900 border border-slate-500 w-60"
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        {/* need to rewrite this to show the user some kind of difference between an empty input and an input that returned no results from Bungie */}
+        {searchResultComponents.length ? searchResultsContainer : null}
+      </div>
+      {characterData && itemDefinitions ? (
+        <CharacterContainer
+          characterData={characterData}
+          itemDefinitions={itemDefinitions}
+        />
+      ) : null}
+    </>
+  );
+
+  const loadingView = <p>loading...</p>;
+
   return (
     <main className="flex min-h-screen flex-col items-center pt-24">
-          <div className="flex flex-col items-center mt-2 gap-1">
-            <input
-              value={username}
-              placeholder="search by Bungie name..."
-              className="bg-slate-900 border border-slate-500 w-60"
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            {/* need to rewrite this to show the user some kind of difference between an empty input and an input that returned no results from Bungie */}
-            {searchResultComponents.length ? searchResultsContainer : null}
-          </div>
-          {characterData && itemDefinitions ? (
-            <CharacterContainer
-              characterData={characterData}
-              itemDefinitions={itemDefinitions}
-            />
-          ) : null}
+      {/* show "loading" view until item definition data is done being placed into state */}
+      {itemDefinitions ? loadedView : loadingView}
     </main>
   );
 }
