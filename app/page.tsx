@@ -9,6 +9,10 @@ import { useManifestStatus } from './_hooks/useManifestStatus';
 type SearchResult = {
   bungieGlobalDisplayName: string;
   bungieGlobalDisplayNameCode: number;
+  destinyMemberships: {
+    membershipId: string;
+    membershipType: number;
+  }[];
 };
 
 export default function Home() {
@@ -17,6 +21,10 @@ export default function Home() {
   const [searchResultComponents, setSearchResultComponents] = useState<
     JSX.Element[]
   >([]);
+  const [currentUserMembershipId, setCurrentUserMembershipId] =
+    useState<string>();
+  const [currentUserMembershipType, setCurrentUserMembershipType] =
+    useState<string>();
   const [characterData, setCharacterData] = useState();
   const [itemDefinitions, setItemDefinitions] = useState();
   const manifestIsLoaded = useManifestStatus();
@@ -70,7 +78,12 @@ export default function Home() {
         <SearchComponent
           displayName={searchResult.bungieGlobalDisplayName}
           displayNameCode={searchResult.bungieGlobalDisplayNameCode.toString()}
-          handleUserClick={handleUserClick}
+          handleUserClick={() =>
+            handleUserClick(
+              searchResult.destinyMemberships[0].membershipId,
+              searchResult.destinyMemberships[0].membershipType
+            )
+          }
           key={`search result ${i}`}
         />
       );
@@ -78,8 +91,9 @@ export default function Home() {
     setSearchResultComponents(searchResultComponents);
   }, [searchResults]);
 
-  const handleUserClick = () => {
-    console.log('hi');
+  const handleUserClick = (membershipId: string, membershipType: number) => {
+    setCurrentUserMembershipId(membershipId);
+    setCurrentUserMembershipType(membershipType.toString());
   };
 
   const fetchCharacters = async () => {
@@ -92,8 +106,8 @@ export default function Home() {
           'X-API-Key': `${process.env.REACT_APP_DESTINY_API_KEY}`,
         },
         body: JSON.stringify({
-          membershipType: '3',
-          membershipId: '4611686018467284386',
+          membershipType: currentUserMembershipType,
+          membershipId: currentUserMembershipId,
         }),
       }
     );
@@ -102,7 +116,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if (!characterData) {
+    if (currentUserMembershipId && currentUserMembershipType) {
       (async () => {
         try {
           const characterData = await fetchCharacters();
@@ -112,7 +126,7 @@ export default function Home() {
         }
       })();
     }
-  }, []);
+  }, [currentUserMembershipId, currentUserMembershipType]);
 
   const searchResultsContainer = (
     <div className="max-h-60 w-60 overflow-auto bg-slate-900 border border-slate-500">
@@ -120,8 +134,8 @@ export default function Home() {
     </div>
   );
 
-  return (
-    <main className="flex min-h-screen flex-col items-center pt-24">
+  const loadedView = (
+    <>
       <div className="flex flex-col items-center mt-2 gap-1">
         <input
           value={username}
@@ -138,6 +152,15 @@ export default function Home() {
           itemDefinitions={itemDefinitions}
         />
       ) : null}
+    </>
+  );
+
+  const loadingView = <p>loading...</p>;
+
+  return (
+    <main className="flex min-h-screen flex-col items-center pt-24">
+      {/* show "loading" view until item definition data is done being placed into state */}
+      {itemDefinitions ? loadedView : loadingView}
     </main>
   );
 }
