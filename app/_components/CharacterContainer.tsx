@@ -18,18 +18,18 @@ export default function CharacterContainer({
 }: Props) {
   const characterIds = Object.keys(characterData);
   const characters = characterIds.map((characterId, i) => {
-    const itemHash: number[] = characterData[characterId].items.map(
+    const itemHashes: number[] = characterData[characterId].items.map(
       (item, i) => {
         return item.itemHash;
       }
     );
 
     return (
-      <li key={i} style={{ listStyle: 'none', border: '1px solid purple' }}>
+      <div key={i} style={{ listStyle: 'none', border: '1px solid purple' }}>
         {/* need to add dynamic character names */}
         <p className="text-center">CHARACTER</p>
-        <Character itemDefinitions={itemDefinitions} itemHash={itemHash} />
-      </li>
+        <Character itemDefinitions={itemDefinitions} itemHashes={itemHashes} />
+      </div>
     );
   });
 
