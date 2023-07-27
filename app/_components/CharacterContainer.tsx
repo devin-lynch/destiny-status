@@ -20,7 +20,7 @@ export default function CharacterContainer({
   const characters = characterIds.map((characterId, i) => {
     const itemHashes: number[] = characterData[characterId].items.map(
       (item, i) => {
-        return item.itemHashes;
+        return item.itemHash;
       }
     );
 
