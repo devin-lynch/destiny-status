@@ -23,9 +23,9 @@ export default function Character({ itemDefinitions, itemHash }: Props) {
     if (itemDefinitions) {
       const itemComponents = itemHash.map((item, i) => {
         return (
-          <li key={i}>
+          <div key={i}>
             <Item item={itemDefinitions[item]} />
-          </li>
+          </div>
         );
       });
       setItemComponents(itemComponents);

@@ -25,11 +25,11 @@ export default function CharacterContainer({
     );
 
     return (
-      <li key={i} style={{ listStyle: 'none', border: '1px solid purple' }}>
+      <div key={i} style={{ listStyle: 'none', border: '1px solid purple' }}>
         {/* need to add dynamic character names */}
         <p className="text-center">CHARACTER</p>
         <Character itemDefinitions={itemDefinitions} itemHash={itemHash} />
-      </li>
+      </div>
     );
   });
 
