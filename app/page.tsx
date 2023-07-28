@@ -15,6 +15,8 @@ type SearchResult = {
   }[];
 };
 
+const URL = process.env.URL || 'http://localhost:3000';
+
 export default function Home() {
   const [username, setUsername] = useState('');
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
@@ -50,13 +52,10 @@ export default function Home() {
         return;
       }
       try {
-        const response = await fetch(
-          'http://localhost:3000/api/bungie-user-search',
-          {
-            method: 'POST',
-            body: JSON.stringify({ username }),
-          }
-        );
+        const response = await fetch(`${URL}/api/bungie-user-search`, {
+          method: 'POST',
+          body: JSON.stringify({ username }),
+        });
         const data = await response.json();
         setSearchResults(data.searchResults);
         console.log(data);
@@ -97,20 +96,17 @@ export default function Home() {
   };
 
   const fetchCharacters = async () => {
-    const response = await fetch(
-      'http://localhost:3000/api/get-bungie-profile',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-API-Key': `${process.env.REACT_APP_DESTINY_API_KEY}`,
-        },
-        body: JSON.stringify({
-          membershipType: currentUserMembershipType,
-          membershipId: currentUserMembershipId,
-        }),
-      }
-    );
+    const response = await fetch(`${URL}/api/get-bungie-profile`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-Key': `${process.env.REACT_APP_DESTINY_API_KEY}`,
+      },
+      body: JSON.stringify({
+        membershipType: currentUserMembershipType,
+        membershipId: currentUserMembershipId,
+      }),
+    });
     const data = await response.json();
     return data.characterEquipment.data;
   };
