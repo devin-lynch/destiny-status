@@ -15,7 +15,7 @@ type SearchResult = {
   }[];
 };
 
-const URL = process.env.URL || 'http://localhost:3000';
+const URL = process.env.NEXT_PUBLIC_URL || 'http://localhost:3000';
 
 export default function Home() {
   const [username, setUsername] = useState('');
