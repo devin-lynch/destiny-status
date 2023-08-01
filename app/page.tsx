@@ -112,14 +112,14 @@ export default function Home() {
       }
     );
     const data = await response.json();
-    return data.characterEquipment.data;
+    return [data.characterEquipment.data];
   };
 
   useEffect(() => {
     if (currentUserMembershipId && currentUserMembershipType) {
       (async () => {
         try {
-          const characterData = await fetchCharacters();
+          const [characterData] = await fetchCharacters();
           setCharacterData(characterData);
         } catch (error) {
           console.log(error);

@@ -14,17 +14,27 @@ type Props = {
     };
   };
   itemHashes: number[];
+  itemInstanceIds: number[];
 };
 
-export default function Character({ itemDefinitions, itemHashes }: Props) {
+export default function Character({
+  itemDefinitions,
+  itemHashes,
+  itemInstanceIds,
+}: Props) {
   const [itemComponents, setItemComponents] = useState<JSX.Element[]>();
+
+  console.log('characters instance ids', itemInstanceIds);
 
   useEffect(() => {
     if (itemDefinitions) {
       const itemComponents = itemHashes.map((item, i) => {
         return (
           <div key={i}>
-            <Item item={itemDefinitions[item]} />
+            <Item
+              item={itemDefinitions[item]}
+              itemInstanceId={itemInstanceIds[i]}
+            />
           </div>
         );
       });

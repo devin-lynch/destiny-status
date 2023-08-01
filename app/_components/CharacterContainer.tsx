@@ -23,12 +23,23 @@ export default function CharacterContainer({
         return item.itemHash;
       }
     );
+    const itemInstanceIds: number[] = characterData[characterId].items.map(
+      (item, i) => {
+        return item.itemInstanceId;
+      }
+    );
+
+    console.log('character data:', characterData);
 
     return (
       <div key={i} style={{ listStyle: 'none', border: '1px solid purple' }}>
         {/* need to add dynamic character names */}
         <p className="text-center">CHARACTER</p>
-        <Character itemDefinitions={itemDefinitions} itemHashes={itemHashes} />
+        <Character
+          itemDefinitions={itemDefinitions}
+          itemHashes={itemHashes}
+          itemInstanceIds={itemInstanceIds}
+        />
       </div>
     );
   });

@@ -8,9 +8,11 @@ type Props = {
     };
     itemTypeAndTierDisplayName: string;
   };
+  itemInstanceId: number;
 };
 
-export default function Item({ item }: Props) {
+export default function Item({ item, itemInstanceId }: Props) {
+  console.log('item:', item, 'itemInstanceId:', itemInstanceId);
   return (
     <div className="flex mt-8 items-center">
       <img
