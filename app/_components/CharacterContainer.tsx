@@ -10,11 +10,13 @@ type Props = {
     };
   };
   itemDefinitions: {};
+  itemInstances: {};
 };
 
 export default function CharacterContainer({
   characterData,
   itemDefinitions,
+  itemInstances,
 }: Props) {
   const characterIds = Object.keys(characterData);
   const characters = characterIds.map((characterId, i) => {
@@ -29,8 +31,6 @@ export default function CharacterContainer({
       }
     );
 
-    console.log('character data:', characterData);
-
     return (
       <div key={i} style={{ listStyle: 'none', border: '1px solid purple' }}>
         {/* need to add dynamic character names */}
@@ -39,6 +39,7 @@ export default function CharacterContainer({
           itemDefinitions={itemDefinitions}
           itemHashes={itemHashes}
           itemInstanceIds={itemInstanceIds}
+          itemInstances={itemInstances}
         />
       </div>
     );
