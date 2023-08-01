@@ -8,19 +8,10 @@ type Props = {
     };
     itemTypeAndTierDisplayName: string;
   };
-  itemInstanceId: number;
   powerLevel?: number;
 };
 
-export default function Item({ item, itemInstanceId, powerLevel }: Props) {
-  console.log(
-    'item:',
-    item,
-    'itemInstanceId:',
-    itemInstanceId,
-    'powerLevel:',
-    powerLevel
-  );
+export default function Item({ item, powerLevel }: Props) {
   return (
     <div className="flex mt-8 items-center">
       <img

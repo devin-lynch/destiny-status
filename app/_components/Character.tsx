@@ -35,19 +35,13 @@ export default function Character({
   useEffect(() => {
     if (itemDefinitions) {
       const itemComponents = itemHashes.map((item, i) => {
-        console.log('####', itemInstances[itemInstanceIds[i]]);
         let powerLevel = undefined;
         if (itemInstances[itemInstanceIds[i]].primaryStat) {
           powerLevel = itemInstances[itemInstanceIds[i]].primaryStat.value;
         }
         return (
           <div key={i}>
-            <Item
-              item={itemDefinitions[item]}
-              itemInstanceId={itemInstanceIds[i]}
-              powerLevel={powerLevel}
-              // powerLevel={4}
-            />
+            <Item item={itemDefinitions[item]} powerLevel={powerLevel} />
           </div>
         );
       });
